@@ -24,6 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         email_user, mobile = user.email.split('@')
         user.set_password(validated_data['password'])
+        user.save()
         return user
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
