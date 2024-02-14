@@ -23,3 +23,5 @@ const useAxios = async() => {
     })
     return axiosInstance
 }
+
+export default useAxios
