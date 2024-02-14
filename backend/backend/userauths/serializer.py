@@ -11,7 +11,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        field = ['full_name','email','phone','password','password2']
+        fields = ['full_name','email','phone','password','password2']
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"Password","Not match password"})
@@ -23,8 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             phone = validated_data['phone']
         )
         email_user, mobile = user.email.split('@')
-        user.set_password(validate_password['password'])
-
+        user.set_password(validated_data['password'])
         return user
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
