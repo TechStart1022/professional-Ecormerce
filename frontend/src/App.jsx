@@ -5,6 +5,8 @@ import './App.css'
 import Login from './views/login'
 import Register from './views/register'
 import {BrowserRouter, Route, Routes} from "react-router-dom"
+import Dashboard from './views/Dashboard'
+import Logout from './views/Logout'
 function App() {
   return (
     <>
@@ -12,6 +14,8 @@ function App() {
       <Routes>
         <Route path='/login' element = {<Login />} />
         <Route path='/register' element = {<Register />} />
+        <Route path='/' element = {<Dashboard />} />
+        <Route path='/logout' element = {<Logout />} />
       </Routes>
     </BrowserRouter>
         

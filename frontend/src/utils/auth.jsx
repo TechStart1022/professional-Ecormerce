@@ -9,14 +9,14 @@ export const login = async(email, password) => {
             email,
             password
         })
-        console.log(data.access,"refresh_Token")
+        // console.log(data.access,"refresh_Token")
         if(status == 200){
-            console.log("success get the token")
+            // console.log("success get the token")
             setUserAuth(data.access,data.refresh)
         }
         return {data,error:null}
     } catch(error) {
-        console.log(error)
+        // console.log(error)
         return {
             data:null,
             // console.log(error)
@@ -36,20 +36,19 @@ export const register = async(full_name,email, phone,password, password2) => {
         await login(email,password)
         return {data, error:null}
     } catch(error){
-        console.log(error)
+        // console.log(error)
     }
 }
 
 export const logout = () => {
-    Cookies.remove("access_token")
-    Cookies.remove("refresh_token")
+    Cookies.remove("accessToken")
+    Cookies.remove("refreshToken")
     useAuthStore.getState().setUser(null)
 }
 
 export const setUser = async() => {
-    const accessToken = Cookies.get('access_token')
+    const accessToken = Cookies.get('accessToken')
     const refreshToken = Cookies.get('refreshToken')
-
     if(!accessToken || !refreshToken) {
         return
     }
@@ -71,14 +70,14 @@ export const setUserAuth = (accessToken, refresh_token) => {
         secure:true
      }) 
      const user = jwtDecode(accessToken) ?? null;
-
      if(user) {
-        useAuthStore.getState().setLoading(false)
+        useAuthStore.getState().setUser(user)
      }
+     useAuthStore.getState().setLoading(false)
 }
 
 export const getRefreshToken = async() =>{
-    const refresh_token = Cookies.get('refresh_token')
+    const refresh_token = Cookies.get('refreshToken')
     const response = await apiInstance.post('/user/token/refresh/',{
         refresh:refresh_token
     })

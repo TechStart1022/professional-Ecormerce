@@ -8,11 +8,16 @@ function Login() {
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
     const isLoggedIn = useAuthStore((state) => state.setLoggedIn)
+    const logginUser = useAuthStore((state)=>state.allUserData)
+    
+    const navigate = useNavigate()
     useEffect(()=>{
+        console.log(isLoggedIn())
+        console.log(logginUser)
         if(isLoggedIn()){
-            navigate('/register')
+            navigate('/')
         }
-    },[])
+    },[isLoggedIn()])
     const resetForm = () => {
         setEmail('')
         setPassword('')
