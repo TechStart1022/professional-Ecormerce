@@ -10,9 +10,12 @@ function Dashboard(){
     return (
         <>
         {!isLoggedIn 
-            ?<div>
-                <Link to={'/login'}>login</Link><br/>
-                <Link to={'/register'}>Register</Link>
+            ?<div className='container'>
+                <h1>Home page</h1>
+                <div className="d-flex">
+                    <Link className='btn btn-primary' to={'/login'}>login</Link><br/>
+                    <Link className='btn btn-success ms-4' to={'/register'}>Register</Link>
+                </div>
             </div> 
             :<div>
                 <h1>Home page</h1>

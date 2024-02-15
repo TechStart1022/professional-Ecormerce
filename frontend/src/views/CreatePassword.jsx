@@ -1,21 +1,35 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 function CreatePassword() {
     const [password,setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [searchParam] = useSearchParams()
+
     const otp = searchParam.get('otp')
     const uidb64 = searchParam.get('uidb64')
-    const handleSubmit = (e) => {
-        console.log(otp)
-        console.log(uidb64)
+    const navigate = useNavigate()
+
+    const handleSubmit = async(e) => {
         e.preventDefault()
         if(password !== confirmPassword){
             alert('Password not match')
         }else{
-            alert('password processing...')
-
+            // console.log(password,otp,uidb64)
+            const formdata = {password,otp,uidb64}
+            console.log(formdata,"formdata ")
+            try{
+                await axios.post('http://localhost:8000/api/v1/user/password-change/',formdata).then((res)=>{
+                    console.log(res.data)
+                    alert("password changed successfully")
+                    navigate('/login')
+                })
+            }catch(err){
+                console.log(err)
+            }
         }
     }
 

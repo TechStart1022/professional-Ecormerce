@@ -4,7 +4,7 @@ import {useNavigate,Link} from 'react-router-dom'
 import { useAuthStore } from "../store/auth"
 
 function Login() {
-    const [email, setEmail] = useState('RSG')
+    const [email, setEmail] = useState('snow1022@gmail.com')
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
     const isLoggedIn = useAuthStore((state) => state.setLoggedIn)
@@ -42,6 +42,7 @@ function Login() {
                     id='email' 
                     name='email' 
                     value={email}
+                    className='form-control'
                     onChange={(e) => setEmail(e.target.value)} 
                 />
                 <br/>
@@ -51,11 +52,12 @@ function Login() {
                     id='password'
                     name='password'
                     value={password}
+                    className='form-control'
                     onChange={(e)=>setPassword(e.target.value)}
                 />
                 <br/>
                 <br/>
-                <button type='submit'>Login</button>
+                <button className='btn btn-success' type='submit'>Login</button>
             </form>
             <hr/>
             <br/>
