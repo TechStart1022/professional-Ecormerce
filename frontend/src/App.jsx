@@ -7,6 +7,7 @@ import Register from './views/register'
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Dashboard from './views/Dashboard'
 import Logout from './views/Logout'
+import ForgotPassword from './views/ForgetPassword'
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path='/register' element = {<Register />} />
         <Route path='/' element = {<Dashboard />} />
         <Route path='/logout' element = {<Logout />} />
+        <Route path='/forgotpassword' element = {<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
         

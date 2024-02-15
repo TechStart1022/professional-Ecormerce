@@ -57,6 +57,9 @@ function Login() {
                 <br/>
                 <button type='submit'>Login</button>
             </form>
+            <hr/>
+            <br/>
+            <Link to={'/forgotpassword'}>Forget Password</Link>
         </div>
     )
 }
