@@ -9,10 +9,14 @@ import Dashboard from './views/Dashboard'
 import Logout from './views/Logout'
 import ForgotPassword from './views/ForgetPassword'
 import CreatePassword from './views/CreatePassword'
+import StoreHeader from './base/StoreHeader'
+import StoreFooter from './base/StoreFooter'
+
 function App() {
   return (
     <>
     <BrowserRouter>
+    <StoreHeader />
       <Routes>
         <Route path='/login' element = {<Login />} />
         <Route path='/register' element = {<Register />} />
@@ -21,6 +25,7 @@ function App() {
         <Route path='/forgotpassword' element = {<ForgotPassword />} />
         <Route path='/create-new-password' element = {<CreatePassword />} />
       </Routes>
+      <StoreFooter />
     </BrowserRouter>
         
     </>
