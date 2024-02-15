@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { register } from '../utils/auth'
-import { MainWrapper} from '../layout/MainWrapper'
+import MainWrapper from '../layout/MainWrapper'
 function Register() {
     const [fullname, setFullname] = useState()
     const [email, setEmail] = useState('')
@@ -35,7 +35,7 @@ function Register() {
 
     useEffect(()=>{
 
-    })
+    },[])
 
     return (
         <>
@@ -90,3 +90,4 @@ function Register() {
         </>
     )
 }
+export default Register

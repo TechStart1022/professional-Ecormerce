@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-v6u^wkg=p@01sl+(uus4#qxla%bjag#b8akp0h*mubv2lm*ttc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # custom apps
     'api',
+    'corsheaders',
     'userauths',
     'customer',
     'vendor',
@@ -46,8 +47,15 @@ INSTALLED_APPS = [
     # Third party
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'drf_yasg'
+    'drf_yasg',
+    
 ]
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:5173',
+# )
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:5173',
+)
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=50),
@@ -87,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -163,3 +172,7 @@ AUTH_USER_MODEL = 'userauths.User'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTING = {
+    'site_title':"JUS"
+}

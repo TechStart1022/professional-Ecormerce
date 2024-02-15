@@ -7,12 +7,11 @@ function Login() {
     const [email, setEmail] = useState('RSG')
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
-    // const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
-
+    const isLoggedIn = useAuthStore((state) => state.setLoggedIn)
     useEffect(()=>{
-        // if(isLoggedIn()){
-        //     navigate('/')
-        // }
+        if(isLoggedIn()){
+            navigate('/register')
+        }
     },[])
     const resetForm = () => {
         setEmail('')

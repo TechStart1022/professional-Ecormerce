@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/auth";
 import apiInstance from "./axios";
-// import jwt_decode from 'jwt-decode'
+import {jwtDecode} from "jwt-decode"
 import Cookies from 'js-cookie'
 import axios from "axios";
 export const login = async(email, password) => {
@@ -9,18 +9,18 @@ export const login = async(email, password) => {
             email,
             password
         })
-        // console.log(data.refresh,"refresh_Token")
+        console.log(data.access,"refresh_Token")
         if(status == 200){
-            // console.log("success get the token")
+            console.log("success get the token")
             setUserAuth(data.access,data.refresh)
         }
         return {data,error:null}
     } catch(error) {
-        console.log("erorr")
+        console.log(error)
         return {
             data:null,
+            // console.log(error)
             // error:error.response.data?.detail || 'Something went wrong'
-            error:error.response.data
         }
     }
 }
@@ -70,7 +70,7 @@ export const setUserAuth = (accessToken, refresh_token) => {
         expires:7,
         secure:true
      }) 
-     const user = jwt_decode(accessToken) ?? null
+     const user = jwtDecode(accessToken) ?? null;
 
      if(user) {
         useAuthStore.getState().setLoading(false)
@@ -87,7 +87,7 @@ export const getRefreshToken = async() =>{
 
 export const isAccessTokenExpired = (accessToken) => {
     try{
-        const decodedToken = jwt_decode(accessToken)
+        const decodedToken = jwtDecode(accessToken)
         return decodedToken.exp <Date.now() /100
     }catch(error){
         return true
