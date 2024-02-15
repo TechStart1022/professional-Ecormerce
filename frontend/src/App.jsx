@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Dashboard from './views/Dashboard'
 import Logout from './views/Logout'
 import ForgotPassword from './views/ForgetPassword'
+import CreatePassword from './views/CreatePassword'
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element = {<Dashboard />} />
         <Route path='/logout' element = {<Logout />} />
         <Route path='/forgotpassword' element = {<ForgotPassword />} />
+        <Route path='/create-new-password' element = {<CreatePassword />} />
       </Routes>
     </BrowserRouter>
         
