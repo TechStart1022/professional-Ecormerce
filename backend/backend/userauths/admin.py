@@ -9,8 +9,8 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ['full_name','gender','country']
     list_editable = ['gender','country']
 
-admin.site.register(User)
-admin.site.register(Profile)
+admin.site.register(User,UserAdmin)
+admin.site.register(Profile,ProfileAdmin)
 
 
 

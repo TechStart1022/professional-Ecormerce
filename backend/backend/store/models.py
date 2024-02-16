@@ -30,7 +30,7 @@ class Product(models.Model):
     shipping_amount = models.DecimalField(decimal_places=2,max_digits=12,default=0.00)
 
     stock_qty = models.PositiveIntegerField(default=1)
-    instock=models.BooleanField(default=True)
+    in_stock=models.BooleanField(default=True)
 
     status=models.CharField(max_length=255,choices=STATUS,default="published")
 
@@ -57,6 +57,8 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.product.title
+    class Meta:
+        verbose_name_plural = "Product images"
 class Specification(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     title=models.CharField(max_length=255)
