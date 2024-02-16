@@ -44,7 +44,7 @@ class Product(models.Model):
 
     def save(self,*args, **kwargs):
         if self.slug=='' or self.slug==None:
-            self.slug=slugify(self.name)
+            self.slug=slugify(self.title)
         super(Product,self).save(*args, **kwargs)
     def __str__(self):
         return self.title

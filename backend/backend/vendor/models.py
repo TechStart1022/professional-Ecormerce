@@ -20,7 +20,7 @@ class Vendor(models.Model):
     def save(self, *args, **kwargs):
         if self.slug == '' or self.slug == None:
             self.slug = slugify(self.name)
-        super(Vendor,self).save()
+        super(Vendor,self).save(*args, **kwargs)
 
 
 # Create your models here.
