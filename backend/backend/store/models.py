@@ -2,7 +2,9 @@ from django.db import models
 from django.utils.text import slugify
 from userauths.models import User, Profile
 from vendor.models import Vendor
+from django.db.models.signals import post_save
 from shortuuid.django_fields import ShortUUIDField
+from django.dispatch import receiver
 class Category(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='category',default='category.jpg', blank=True, null=True)
@@ -48,6 +50,11 @@ class Product(models.Model):
         super(Product,self).save(*args, **kwargs)
     def __str__(self):
         return self.title
+    def product_rating(self):
+        product_rating = Review.objects.filter(product=self).aggregate(avg_rating=models.Avg("rating"))
+        return product_rating['avg_rating']
+    
+
 class Gallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='Gallery',default='gallery.jpg')
@@ -165,3 +172,76 @@ class CartOrderItem(models.Model):
     def __str__(self):
         return self.oid
 # Create your models here.
+class Coupon(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    user_by = models.ManyToManyField(User, blank=True)
+    code = models.CharField(max_length=100)
+    discount = models.IntegerField(default=1)
+    active = models.BooleanField(default=False)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.code
+class Notification(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    order = models.ForeignKey(CartOrder,on_delete=models.SET_NULL,null=True,blank=True)
+    order_item = models.ForeignKey(CartOrderItem, on_delete=models.CASCADE)
+    seen = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        if self.order:
+            return self.order.oid
+        else:
+            return f"notification - {self.pk}"
+class WishList(models.Model):
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.product.title
+class ProductFaq(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    email=models.EmailField(null=True,blank=True)
+    question=models.CharField(max_length=100)
+    answer=models.TextField(null=True,blank=True)
+    active=models.BooleanField(default=False)
+    date=models.DateTimeField(auto_add_now=True)
+
+    def __str__(self):
+        return self.question
+    class Meta:
+        verbose_name_plural = "Product FAQs"
+
+class Review(models.Model):
+    RATING= (
+        (1, "1 star"),
+        (2, "2 star"),
+        (3, "3 star"),
+        (4, "4 star"),
+        (5, "5 star"),
+    )   
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    review = models.TextField()
+    rating = models.IntegerField(default=None,choices=RATING)
+    reply = models.TextField(null=True,blank=True)
+
+    class Meta:
+        verbose_name_plural = "Product Reviews & Rating"
+
+    def profile(self):
+        return Profile.objects.get(user=self.user)
+    
+@receiver(post_save,sender=Review)
+def update_product_rating(sender,instance,**kwargs):
+    if instance.product:
+        instance.product.save()
+
+
+
+
