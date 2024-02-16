@@ -53,6 +53,9 @@ class Product(models.Model):
     def product_rating(self):
         product_rating = Review.objects.filter(product=self).aggregate(avg_rating=models.Avg("rating"))
         return product_rating['avg_rating']
+    def save(self,*args, **kwargs):
+        self.rating= self.product_rating()
+        super(Product,self).save(*args,**kwargs)
     
 
 class Gallery(models.Model):
@@ -210,7 +213,7 @@ class ProductFaq(models.Model):
     question=models.CharField(max_length=100)
     answer=models.TextField(null=True,blank=True)
     active=models.BooleanField(default=False)
-    date=models.DateTimeField(auto_add_now=True)
+    date=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.question
@@ -241,6 +244,7 @@ class Review(models.Model):
 def update_product_rating(sender,instance,**kwargs):
     if instance.product:
         instance.product.save()
+
 
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import User, Product,Category,Cart,CartOrderItem,CartOrder,Gallery,Size, Color,Specification
-
+from store.models import User, Product,Category,Cart,CartOrderItem,CartOrder,Gallery,Size, Color,Specification,Notification, ProductFaq,Review,WishList,Coupon
+from vendor.models import Vendor
 
 class CategorySerailizer(serializers.Serializer):
     
@@ -58,8 +58,122 @@ class ProductSerailizer(serializers.Serializer):
             'slug',
             'date'
         ],
+    def __init__(self, *args, **kwargs):
+        super(ProductSerailizer,self).__init__(*args,**kwargs)
 
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class CartSerailizer(serializers.Serializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(CartSerailizer,self).__init__(*args,**kwargs)
 
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class CartOrderSerailizer(serializers.Serializer):
+    class Meta:
+        model = CartOrder
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(CartOrderSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class CartOrderItemSerailizer(serializers.Serializer):
+    class Meta:
+        model = CartOrderItem
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(CartOrderItemSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class ProductFaqSerailizer(serializers.Serializer):
+    class Meta:
+        model = ProductFaq
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(ProductFaqSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class VendorSerailizer(serializers.Serializer):
+    class Meta:
+        model = Vendor
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(VendorSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class ReviewSerailizer(serializers.Serializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(ReviewSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class WishListSerailizer(serializers.Serializer):
+    class Meta:
+        model = WishList
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(WishListSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class CouponSerailizer(serializers.Serializer):
+    class Meta:
+        model = Coupon
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(CouponSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
+class NotificationSerailizer(serializers.Serializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(NotificationSerailizer,self).__init__(*args,**kwargs)
+
+        request = self.context.get("request")
+        if request and request.method == "POST":
+            self.Meta.depth = 0
+        else:
+            self.Meta.depth = 3
 
 
 
