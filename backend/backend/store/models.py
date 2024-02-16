@@ -44,11 +44,42 @@ class Product(models.Model):
 
     def save(self,*args, **kwargs):
         if self.slug=='' or self.slug==None:
-            self.slug=slugify(self.title)
+            self.slug=slugify(self.name)
         super(Product,self).save(*args, **kwargs)
     def __str__(self):
         return self.title
+class Gallery(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='Gallery',default='gallery.jpg')
+    active =models.BooleanField(default=True)
+    date = models.DateTimeField(auto_now_add = True)
+    pid = ShortUUIDField(unique=True, length=10, alphabet="abcdefg12345")
 
+    def __str__(self):
+        return self.product.title
+class Specification(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    title=models.CharField(max_length=255)
+    content=models.CharField(max_length=255)
+    date=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
+class Size(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name=models.CharField(max_length=255)
+    price = models.DecimalField(decimal_places=2,max_digits=12,default=0.00)
+    date=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+class Color(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name=models.CharField(max_length=100)
+    color_name=models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
         
 
