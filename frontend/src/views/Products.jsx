@@ -48,10 +48,9 @@ const  Products = () => {
                                         className="bg-image hover-zoom ripple"
                                         data-mdb-ripple-color="light"
                                     >
-                                        <img
-                                            src={product.image}
-                                            className="w-100"
-                                        />
+                                        <Link to={`/detail/${product.slug}`}>
+                                            <img src={product.image} className="w-100"/>
+                                        </Link>
                                         <a href="#!">
                                             <div className="mask">
                                                 <div className="d-flex justify-content-start align-items-end h-100">
@@ -169,7 +168,7 @@ const  Products = () => {
                     <div className="row">
                         {category?.map((c,index)=>(
                         <div className="col-lg-2">
-                            <Link to={`/detail/${p.slug}`}><img src={c.image} style={{width:"100px",height:"100px",borderRadius:"50%",objectFit:"cover"}}/></Link>
+                            <img src={c.image}style={{width:"100px",height:"100px",borderRadius:"50%",objectFit:"cover"}}/>
                             <h6>{c.title}</h6>
                         </div>
                         ))}

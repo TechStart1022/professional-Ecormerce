@@ -12,6 +12,7 @@ import CreatePassword from './views/CreatePassword'
 import StoreHeader from './base/StoreHeader'
 import StoreFooter from './base/StoreFooter'
 import Products from './views/Products'
+import ProductDetail from './views/ProductDetail'
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
         <Route path='/forgotpassword' element = {<ForgotPassword />} />
         <Route path='/create-new-password' element = {<CreatePassword />} />
         <Route path='/product' element = {<Products />} />
+        <Route path='/detail/:slug' element = {<ProductDetail />} />
       </Routes>
       <StoreFooter />
     </BrowserRouter>
