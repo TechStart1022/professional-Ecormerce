@@ -59,6 +59,8 @@ class ProductSerailizer(serializers.ModelSerializer):
         fields =['gallery']
         fields = [
             'id',
+            'title',
+            'image',
             'description',
             'category',
             'price',

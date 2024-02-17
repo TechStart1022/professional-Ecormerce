@@ -17,5 +17,14 @@ class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerailizer
     permission_classes = [AllowAny]
+class ProductDetailView(generics.RetrieveAPIView):
+    serializer_class = ProductSerailizer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        slug = self.kwargs['slug']
+        print(slug,'slug')
+        return Product.objects.get(slug=slug)
+    
 
 # Create your views here.
