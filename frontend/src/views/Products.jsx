@@ -32,8 +32,6 @@ const  Products = () => {
         }
         fetchData()
     },[])
-    console.log(category)
-
     
     return (
         <div>
@@ -42,7 +40,7 @@ const  Products = () => {
                 <section className="text-center">
                     <div className="row">
                         {products?.map((product,index)=>(
-                            <div className="col-lg-4 col-md-12 mb-4">
+                            <div className="col-lg-4 col-md-12 mb-4" key={index}>
                                 <div className="card">
                                     <div
                                         className="bg-image hover-zoom ripple"
