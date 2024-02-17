@@ -2,47 +2,68 @@ from rest_framework import serializers
 from store.models import User, Product,Category,Cart,CartOrderItem,CartOrder,Gallery,Size, Color,Specification,Notification, ProductFaq,Review,WishList,Coupon
 from vendor.models import Vendor
 
-class CategorySerailizer(serializers.Serializer):
+class CategorySerailizer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        feilds = "__all__"
-class ProductSerailizer(serializers.Serializer):
-    
+        fields = '__all__'
+class ProductSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        feilds = "__all__"
-class ColorSerailizer(serializers.Serializer):
+        fields = "__all__"
+class ColorSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Color
-        feilds = "__all__"
-class GallerySerializer(serializers.Serializer):
+        fields = "__all__"
+class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model=Gallery
-        feilds = '__all__'
-class SpecificationSerializer(serializers.Serializer):
+        fields = '__all__'
+class SpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specification
-        feilds = "__all__"
+        fields = "__all__"
 class SizeSerializer(serializers.Serializer):
     class Meta:
         model=Size
-        feilds="__all__"
-class ProductSerailizer(serializers.Serializer):
-    gallery = GallerySerializer(many=True,read_only=True)
-    color = ColorSerailizer(many=True,read_only=True)
-    specification = SpecificationSerializer(many=True,read_only=True)
-    size = SizeSerializer(many=True,read_only=True)
+        fields="__all__"
+# class RegisterSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(write_only=True, required=True,validators=[validate_password])
+#     password2 = serializers.CharField(write_only=True, required=True)
+
+#     class Meta:
+#         model = User
+#         fields = ['full_name','email','phone','password','password2']
+#     def validate(self, attrs):
+#         if attrs['password'] != attrs['password2']:
+#             raise serializers.ValidationError({"Password","Not match password"})
+#         return attrs
+#     def create(self,validated_data):
+#         user = User.objects.create(
+#             full_name = validated_data['full_name'],
+#             email = validated_data['email'],
+#             phone = validated_data['phone']
+#         )
+#         email_user, mobile = user.email.split('@')
+#         user.set_password(validated_data['password'])
+#         user.save()
+#         return user        
+class ProductSerailizer(serializers.ModelSerializer):
+    gallery = GallerySerializer(many=True)
+    color = ColorSerializer(many=True)
+    specification = SpecificationSerializer(many=True)
+    size = SizeSerializer(many=True)
     class Meta:
         model = Product
-        feilds = [
+        fields =['gallery']
+        fields = [
             'id',
             'description',
             'category',
             'price',
             'old_price',
-            'shipping amount',
+            'shipping_amount',
             'stock_qty',
             'in_stock',
             'status',
@@ -53,11 +74,11 @@ class ProductSerailizer(serializers.Serializer):
             'gallery',
             'color',
             'specification',
-            'size'
+            'size',
             'pid',
             'slug',
             'date'
-        ],
+        ]
     def __init__(self, *args, **kwargs):
         super(ProductSerailizer,self).__init__(*args,**kwargs)
 
@@ -66,7 +87,7 @@ class ProductSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class CartSerailizer(serializers.Serializer):
+class CartSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
@@ -78,7 +99,7 @@ class CartSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class CartOrderSerailizer(serializers.Serializer):
+class CartOrderSerailizer(serializers.ModelSerializer):
     class Meta:
         model = CartOrder
         fields = '__all__'
@@ -90,7 +111,7 @@ class CartOrderSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class CartOrderItemSerailizer(serializers.Serializer):
+class CartOrderItemSerailizer(serializers.ModelSerializer):
     class Meta:
         model = CartOrderItem
         fields = '__all__'
@@ -102,7 +123,7 @@ class CartOrderItemSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class ProductFaqSerailizer(serializers.Serializer):
+class ProductFaqSerailizer(serializers.ModelSerializer):
     class Meta:
         model = ProductFaq
         fields = '__all__'
@@ -114,7 +135,7 @@ class ProductFaqSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class VendorSerailizer(serializers.Serializer):
+class VendorSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
         fields = '__all__'
@@ -126,7 +147,7 @@ class VendorSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class ReviewSerailizer(serializers.Serializer):
+class ReviewSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
@@ -138,7 +159,7 @@ class ReviewSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class WishListSerailizer(serializers.Serializer):
+class WishListSerailizer(serializers.ModelSerializer):
     class Meta:
         model = WishList
         fields = '__all__'
@@ -150,7 +171,7 @@ class WishListSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class CouponSerailizer(serializers.Serializer):
+class CouponSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Coupon
         fields = '__all__'
@@ -162,7 +183,7 @@ class CouponSerailizer(serializers.Serializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 3
-class NotificationSerailizer(serializers.Serializer):
+class NotificationSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'

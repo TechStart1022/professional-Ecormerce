@@ -5,7 +5,6 @@ from store.models import Category, Product,Size, Color,Gallery,Specification,Car
 
 class GalleryInline(admin.TabularInline):
     model=Gallery
-
 class SizeInline(admin.TabularInline):
     model=Size
 class SpecificationInline(admin.TabularInline):
@@ -17,7 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable=['featured']
     list_filter=['date']
     search_fields=['title']
-    inlines=[GalleryInline,SpecificationInline,SizeInline,ColorInline]
+    # inlines=[GalleryInline,SpecificationInline,SizeInline,ColorInline]
 
 
 class ReviewAdmin(admin.ModelAdmin):
@@ -25,6 +24,10 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Cart)
+admin.site.register(Color)
+admin.site.register(Size)
+admin.site.register(Specification)
+admin.site.register(Gallery)
 admin.site.register(CartOrder)
 admin.site.register(CartOrderItem)
 admin.site.register(Review,ReviewAdmin)
