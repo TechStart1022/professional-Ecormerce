@@ -37,7 +37,7 @@ class Product(models.Model):
     status=models.CharField(max_length=255,choices=STATUS,default="published")
     featured = models.BooleanField(default=False)
     views = models.PositiveIntegerField(default=0)
-    rating = models.PositiveIntegerField(default=0)
+    rating = models.PositiveIntegerField(default=0,null=True,blank=True)
     vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
     pid = ShortUUIDField(unique=True,length=10,alphabet="abcdefg12345")
     slug = models.SlugField(unique=True)
@@ -55,7 +55,7 @@ class Product(models.Model):
     def gallery(self):
         return Gallery.objects.filter(product=self)
     def size(self):
-        return Size.objects.filter(product=self)
+         return Size.objects.filter(product=self)
     def specification(self):
         return Specification.objects.filter(product=self)
     def rating_count(self):
@@ -240,7 +240,7 @@ class Review(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     review = models.TextField()
-    rating = models.IntegerField(default=None,choices=RATING)
+    rating = models.IntegerField(default=None,choices=RATING,null=True)
     reply = models.TextField(null=True,blank=True)
 
     class Meta:

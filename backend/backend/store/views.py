@@ -25,7 +25,7 @@ class ProductDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         slug = self.kwargs['slug']
-        print(slug,'slug')
+        # print(slug,'slug')
         return Product.objects.get(slug=slug)
     
 class CartAPIView(generics.ListCreateAPIView):
