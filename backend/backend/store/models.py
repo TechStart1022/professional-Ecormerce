@@ -248,7 +248,23 @@ class Review(models.Model):
 
     def profile(self):
         return Profile.objects.get(user=self.user)
+
+
+class Tax(models.Model):
+    country = models.CharField(max_length=100)
+    rate = models.IntegerField(default=0,help_text="Numbers added here are in pecentage e.g 5 %")
+    active = models.BooleanField(default=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.country
     
+    class Meta:
+        verbose_name_plural = "Taxes"
+        ordering = ['country']
+
+
+
 @receiver(post_save,sender=Review)
 def update_product_rating(sender,instance,**kwargs):
     if instance.product:

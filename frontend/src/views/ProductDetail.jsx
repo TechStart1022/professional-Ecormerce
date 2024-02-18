@@ -1,43 +1,44 @@
-import React,{useState,useEffect} from "react"
-import { useNavigate,useParams} from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 
-const ProductDetail = () =>{
+const ProductDetail = () => {
     const [product, setProduct] = useState([])
     const [specification, setSpecification] = useState([])
     const [category, setCategory] = useState([])
     const [gallery, setGallery] = useState([])
     const [colors, setColors] = useState([])
-
+    const [size, setSize] = useState([])
     const params = useParams()
-    useEffect(()=>{
-        const fetchData = async() => {
-            try{
-                await axios.get(`http://localhost:8000/api/v1/products/${params.slug}`).then((res)=>{
-                setProduct(res.data)
-                if(product){
-                    setGallery(res.data.gallery)
-                    setCategory(res.data.category)
-                    setSpecification(res.data.specification)
-                    setColors(res.data.color)
-                }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await axios.get(`http://localhost:8000/api/v1/products/${params.slug}`).then((res) => {
+                    setProduct(res.data)
+                    if (product) {
+                        setGallery(res.data.gallery)
+                        setCategory(res.data.category)
+                        setSpecification(res.data.specification)
+                        setColors(res.data.color)
+                        setSize(size)
+                    }
 
-            })
-            }catch(error){
+                })
+            } catch (error) {
                 alert(error.response.data)
                 return
             }
         }
         fetchData()
-    },[gallery,category,product])
-    useEffect(()=>{
-        if(gallery){
-            console.log(colors,"gallery")
+    }, [gallery, category, product])
+    useEffect(() => {
+        if (gallery) {
+            console.log(size, "gallery")
         }
-    },[gallery])
+    }, [size.name])
 
-    
-    return(
+
+    return (
         <main className="mb-4 mt-4">
             <div className="container">
                 {/* Section: Product details */}
@@ -64,7 +65,7 @@ const ProductDetail = () =>{
                                     </div>
                                 </div>
                                 <div className="mt-3 d-flex">
-                                    {gallery?.map((g,index)=>(
+                                    {gallery?.map((g, index) => (
                                         <div className="p-3">
                                             <img
                                                 src={g.image}
@@ -90,7 +91,7 @@ const ProductDetail = () =>{
                             <div>
                                 <h1 className="fw-bold mb-3">{product.title}</h1>
                                 <div className="d-flex text-primary just align-items-center">
-                                    <ul className="mb-3 d-flex p-0" style=  {{ listStyle: "none" }}>
+                                    <ul className="mb-3 d-flex p-0" style={{ listStyle: "none" }}>
                                         <li>
                                             <i className="fas fa-star fa-sm text-warning ps-0" title="Bad" />
                                             <i className="fas fa-star fa-sm text-warning ps-0" title="Bad" />
@@ -122,13 +123,13 @@ const ProductDetail = () =>{
                                                 </th>
                                                 <td>{category?.title}</td>
                                             </tr>
-                                            {specification.map((s,index)=>(
-                                            <tr key={index}>
-                                            <th className="ps-0 w-25" scope="row">
-                                                <strong>{s.title}</strong>
-                                            </th>
-                                            <td>{s.content}</td>
-                                        </tr>                                               
+                                            {specification.map((s, index) => (
+                                                <tr key={index}>
+                                                    <th className="ps-0 w-25" scope="row">
+                                                        <strong>{s.title}</strong>
+                                                    </th>
+                                                    <td>{s.content}</td>
+                                                </tr>
                                             ))}
 
                                         </tbody>
@@ -136,7 +137,7 @@ const ProductDetail = () =>{
                                 </div>
                                 <hr className="my-5" />
                                 <form action="">
-                                    <div className="row flex-column">
+                                    <div className="">
                                         {/* Quantity */}
                                         <div className="col-md-6 mb-4">
                                             <div className="form-outline">
@@ -153,22 +154,10 @@ const ProductDetail = () =>{
 
                                         {/* Size */}
                                         <div className="col-md-6 mb-4">
-                                            <div className="form-outline">
-                                                <label className="form-label" htmlFor="typeNumber"><b>Size:</b> XS</label>
-                                            </div>
-                                            <div className='d-flex'>
-                                                <div key={1} className='me-2'>
-                                                    <input type="hidden" className='size_name' value={"XS"} />
-                                                    <button className='btn btn-secondary size_button'>XS</button>
-                                                </div>
-                                                <div key={1} className='me-2'>
-                                                    <input type="hidden" className='size_name' value={"XXL"} />
-                                                    <button className='btn btn-secondary size_button'>XXL</button>
-                                                </div>
-                                                <div key={1} className='me-2'>
-                                                    <input type="hidden" className='size_name' value={"XL"} />
-                                                    <button className='btn btn-secondary size_button'>XL</button>
-                                                </div>
+                                            <div className="">
+                                                {size?.map((s, index) => (
+                                                    <button key={index} className="btn btn-secondary ms-2">{s.name}</button>
+                                                ))}
                                             </div>
                                         </div>
 
@@ -176,24 +165,13 @@ const ProductDetail = () =>{
 
                                         <div className="col-md-6 mb-4">
                                             <div className="">
-                                                {colors.map((color,index)=>(
-                                                    <button className="btn p-3 me-2" style={{backgroundColor:`${color.color_name}`}}></button>
+                                                {colors.map((color, index) => (
+                                                    <button className="btn p-3 me-2" style={{ backgroundColor: `${color.color_name}` }}></button>
                                                 ))}
-                                                
+
                                                 {/* <input type="radio" className='btn-check' name="option" id="color-primary" value={1} />
                                                 <label className="btn btn-primary btn-floating me-2 mb-2 shadow-0" htmlFor="color-primary" /> */}
                                             </div>
-                                            {/* <div className='d-flex'>
-                                                {colors.map((color,index)=>(
-                                                    <div key={1}> 
-                                                        <input type="radio" className='btn-check' name="option" value={1} />
-                                                        <input type="hidden" className='color_image' value={1} />
-                                                        <button className='btn p-3 me-2 color_button' style={{ background: "red" }}>dfdf</button>
-                                                    </div>
-                                                ))}
-
-                                            </div> */}
-                                            <hr />
                                         </div>
 
                                     </div>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from store.models import Category, Product,Size, Color,Gallery,Specification,Cart,CartOrder,CartOrderItem,Review
+from store.models import Category,Tax, Product,Size, Color,Gallery,Specification,Cart,CartOrder,CartOrderItem,Review
 
 
 
@@ -31,4 +31,5 @@ admin.site.register(Gallery)
 admin.site.register(CartOrder)
 admin.site.register(CartOrderItem)
 admin.site.register(Review,ReviewAdmin)
+admin.site.register(Tax)
 # Register your models here.
