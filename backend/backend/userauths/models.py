@@ -42,12 +42,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
-    # def __str__(self):
-    #     if self.full_name:
-    #         return str(self.full_name)
-    #     else:
-    #         return str(self.user)
+    def __str__(self):
+        if self.full_name:
+            return str(self.full_name)
+        else:
+            return str(self.user)
+    def save(self,*args,**kwargs):
+        if self.full_name == "" and self.full_name == None:
+            self.full_name = self.user.full_name
 
+        super(Profile,self).save(*args, **kwargs)
 def create_user_profile(sender,instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
