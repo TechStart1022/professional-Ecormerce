@@ -30,7 +30,7 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.FileField(upload_to='image',default='default/default-user.jpg',null=True,blank=True)
-    full_name=models.CharField(max_length=100)
+    full_name=models.CharField(max_length=100, blank=True, null=True)
     about = models.TextField(null=True,blank=True)
     gender = models.CharField(max_length=100,null=True,blank=True)
     country = models.CharField(max_length=100,null=True,blank=True)
@@ -41,17 +41,15 @@ class Profile(models.Model):
     pid = ShortUUIDField(unique=True, length=10,max_length=20,alphabet="abcdefghijk")
 
     def __str__(self):
-        return str(self.user)
-    def __str__(self):
         if self.full_name:
             return str(self.full_name)
-        else:
-            return str(self.user)
-    def save(self,*args,**kwargs):
-        if self.full_name == "" and self.full_name == None:
+        return str(self.user.full_name)
+    def save(self, *args, **kwargs):
+        if not self.full_name:
             self.full_name = self.user.full_name
-
+            print(self.user.full_name)
         super(Profile,self).save(*args, **kwargs)
+
 def create_user_profile(sender,instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
