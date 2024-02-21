@@ -24,7 +24,7 @@ class Product(models.Model):
         ("published", "Published"),
     )
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='product',default='product.jpg', blank=True, null=True)  
+    image = models.ImageField(upload_to='product',default='product.jpg', blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True, blank=True)
     price = models.DecimalField(decimal_places=2,max_digits=12,default=0.00)
@@ -40,7 +40,7 @@ class Product(models.Model):
     rating = models.PositiveIntegerField(default=0,null=True,blank=True)
     vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
     pid = ShortUUIDField(unique=True,length=10,alphabet="abcdefg12345")
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def save(self,*args, **kwargs):
@@ -83,7 +83,7 @@ class Specification(models.Model):
     title=models.CharField(max_length=255)
     content=models.CharField(max_length=255)
     date=models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.title
 class Size(models.Model):
@@ -116,7 +116,7 @@ class Cart(models.Model):
     color=models.CharField(max_length=100, blank=True,null=True)
     cart_id=models.CharField(max_length=100, blank=True,null=True)
     date=models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"{self.cart_id} - {self.product.title}"
 
@@ -126,12 +126,12 @@ class CartOrder(models.Model):
         ("pending", "Pending"),
         ("processing", "Processing"),
         ("published", "Published"),
-    )   
+    )
     ORDER_STATUS = (
         ("pending", "Pending"),
         ("Fulfilled", "Fulfilled"),
         ("cancelled", "Cancelled"),
-    )   
+    )
     vendor=models.ForeignKey(Vendor,on_delete=models.CASCADE,blank=True)
     buyer=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     sub_total=models.DecimalField(decimal_places=2,max_digits=12,default=0.00)
@@ -157,7 +157,7 @@ class CartOrder(models.Model):
 
     def __str__(self):
         return self.oid
-    
+
 class CartOrderItem(models.Model):
     order = models.ForeignKey(CartOrder,on_delete=models.CASCADE)
     product= models.ForeignKey(Product,on_delete=models.CASCADE)
@@ -236,7 +236,7 @@ class Review(models.Model):
         (3, "3 star"),
         (4, "4 star"),
         (5, "5 star"),
-    )   
+    )
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     review = models.TextField()
@@ -258,7 +258,7 @@ class Tax(models.Model):
 
     def __str__(self):
         return self.country
-    
+
     class Meta:
         verbose_name_plural = "Taxes"
         ordering = ['country']
