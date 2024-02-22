@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import GetCurrentAddress from './plugin/UserCountry';
+// import GetCurrentAddress from './plugin/UserCountry';
+import UserData from './plugin/GetUser';
+
+
 const ProductDetail = () => {
   const [product, setProduct] = useState([]);
   const [specification, setSpecification] = useState([]);
@@ -14,10 +17,11 @@ const ProductDetail = () => {
   const [qtyValue, setQtyValue] = useState(1);
 
   const params = useParams();
-  const currentAddress = GetCurrentAddress()
- 
-  console.log(currentAddress.country)
+  // const currentAddress = GetCurrentAddress()
+  const currentUser = UserData()
+
   useEffect(() => {
+    console.log(currentUser,"ppp")
     const fetchData = async () => {
       try {
         await axios
@@ -63,6 +67,7 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = () => {
+    console.log("UserID",currentUser.id)
     console.log(sizeValue);
     console.log(colorvalue);
     console.log(qtyValue)
