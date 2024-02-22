@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import GetCurrentAddress from './plugin/UserCountry';
 const ProductDetail = () => {
   const [product, setProduct] = useState([]);
   const [specification, setSpecification] = useState([]);
@@ -11,7 +11,12 @@ const ProductDetail = () => {
   const [colorvalue, setColorValue] = useState('No Color');
   const [size, setSize] = useState([]);
   const [sizeValue, setSizeValue] = useState('No Size');
+  const [qtyValue, setQtyValue] = useState(1);
+
   const params = useParams();
+  const currentAddress = GetCurrentAddress()
+ 
+  console.log(currentAddress.country)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,6 +39,7 @@ const ProductDetail = () => {
     };
     fetchData();
   }, []);
+
   const handleColorButtonClick = (e) => {
     e.preventDefault();
     const colorNameinput = e.target
@@ -42,6 +48,7 @@ const ProductDetail = () => {
     setColorValue(colorNameinput.value);
     console.log(colorNameinput.value);
   };
+
   const handleSizeButtonClick = (e) => {
     e.preventDefault();
     const sizeValueInput = e.target
@@ -50,6 +57,17 @@ const ProductDetail = () => {
     setSizeValue(sizeValueInput.value);
   };
 
+  const handleQuantityChange = (e) => {
+    e.preventDefault();
+    setQtyValue(e.target.value);
+  };
+
+  const handleAddToCart = () => {
+    console.log(sizeValue);
+    console.log(colorvalue);
+    console.log(qtyValue)
+    console.log(product.id)
+  };
   return (
     <main className="mb-4 mt-4">
       <div className="container">
@@ -171,9 +189,10 @@ const ProductDetail = () => {
                         <input
                           type="number"
                           id="typeNumber"
-                          className="form-control quantity"
+                          className="form-control"
                           min={1}
-                          value={1}
+                          value={qtyValue}
+                          onChange={handleQuantityChange}
                         />
                       </div>
                     </div>
@@ -237,6 +256,7 @@ const ProductDetail = () => {
                   </div>
                   <button
                     type="button"
+                    onClick={handleAddToCart}
                     className="btn btn-primary btn-rounded me-2"
                   >
                     <i className="fas fa-cart-plus me-2" /> Add to cart
