@@ -138,14 +138,6 @@ const ProductDetail = () => {
                         className="fas fa-star fa-sm text-warning ps-0"
                         title="Bad"
                       />
-                      <i
-                        className="fas fa-star fa-sm text-warning ps-0"
-                        title="Bad"
-                      />
-                      <i
-                        className="fas fa-star fa-sm text-warning ps-0"
-                        title="Bad"
-                      />
                     </li>
 
                     <li style={{ marginLeft: 10, fontSize: 13 }}>
