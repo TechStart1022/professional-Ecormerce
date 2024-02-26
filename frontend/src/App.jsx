@@ -13,10 +13,12 @@ import StoreHeader from './base/StoreHeader'
 import StoreFooter from './base/StoreFooter'
 import Products from './views/Products'
 import ProductDetail from './views/ProductDetail'
+import Layout from './Page/Page'
 function App() {
   return (
     <>
-    <BrowserRouter>
+    <Layout />
+    {/* <BrowserRouter>
     <StoreHeader />
       <Routes>
         <Route path='/login' element = {<Login />} />
@@ -29,8 +31,8 @@ function App() {
         <Route path='/detail/:slug' element = {<ProductDetail />} />
       </Routes>
       <StoreFooter />
-    </BrowserRouter>
-        
+    </BrowserRouter> */}
+
     </>
   )
 }
